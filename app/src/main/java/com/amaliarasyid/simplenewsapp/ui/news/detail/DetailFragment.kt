@@ -1,22 +1,19 @@
 package com.amaliarasyid.simplenewsapp.ui.news.detail
 
-import android.content.Context
-import androidx.lifecycle.ViewModelProvider
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.transition.TransitionInflater
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
-import com.amaliarasyid.simplenewsapp.R
 import com.amaliarasyid.simplenewsapp.databinding.FragmentDetailBinding
-import com.amaliarasyid.simplenewsapp.utils.Constant
 import com.amaliarasyid.simplenewsapp.utils.convertDate
 import com.amaliarasyid.simplenewsapp.utils.setImage
-import java.text.SimpleDateFormat
-import java.util.Locale
+
 
 class DetailFragment : Fragment() {
     private lateinit var binding: FragmentDetailBinding
@@ -44,12 +41,20 @@ class DetailFragment : Fragment() {
                 tvAuthor.text = this.author
                 tvTitle.text = this.title
                 tvDescription.text = this.description
+                tvSource.text = this.source!!.name
                 tvPublishedDate.convertDate(this.publishedAt!!,requireContext())
 
                 ViewCompat.setTransitionName(tvAuthor,"author_${this.publishedAt}")
                 ViewCompat.setTransitionName(tvTitle,"title_${this.publishedAt}")
                 ViewCompat.setTransitionName(imvNews,"image_${this.publishedAt}")
                 ViewCompat.setTransitionName(tvDescription,"desc_${this.publishedAt}")
+
+                tvSource.setOnClickListener{
+                    val url = this.url
+                    val i = Intent(Intent.ACTION_VIEW)
+                    i.data = Uri.parse(url)
+                    startActivity(i)
+                }
             }
         }
     }

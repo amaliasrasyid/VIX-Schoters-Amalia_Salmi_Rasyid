@@ -41,4 +41,6 @@
     <string name="text_sample_published_date"> | 22 October 2022</string>
     <string name="github_username">amaliasrasyid</string>
     <string name="user_name">Amalia Salmi Rasyid</string>
+    <string name="sample_source">BaltimoreRavens.com</string>
+    <string name="text_source">Source : </string>
 </resources>
