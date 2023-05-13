@@ -9,10 +9,14 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.amaliarasyid.simplenewsapp.data.entities.News
+import com.amaliarasyid.simplenewsapp.data.entities.NewsWithSource
 import com.amaliarasyid.simplenewsapp.data.remote.response.ArticlesItem
 import com.amaliarasyid.simplenewsapp.databinding.FragmentNewsBinding
 import com.amaliarasyid.simplenewsapp.databinding.ItemNewsBinding
+import com.amaliarasyid.simplenewsapp.ui.NewsWithSource.NewsAdapter
 import com.amaliarasyid.simplenewsapp.utils.Constant.API_KEY
+import com.amaliarasyid.simplenewsapp.utils.convertToNewsWithSourceEntities
 import com.amaliarasyid.simplenewsapp.utils.mySnackBar
 import com.amaliasrayid.storyapp.utils.Status
 import dagger.hilt.android.AndroidEntryPoint
@@ -47,16 +51,19 @@ class NewsFragment : Fragment() {
             this.adapter = newsAdapter
         }
         newsAdapter.setOnItemCallback(object: NewsAdapter.OnItemCallback{
-            override fun onItemClicked(binding: ItemNewsBinding, data: ArticlesItem) {
+            override fun onItemClicked(binding: ItemNewsBinding, data: NewsWithSource) {
                 with(binding){
-                    val extras = FragmentNavigatorExtras(
-                        tvItemAuthor to "author_${data.publishedAt}",
-                        tvItemTitle to "title_${data.publishedAt}",
-                        imgItemPoster to "image_${data.publishedAt}",
-                        tvItemDescription to "desc_${data.publishedAt}"
-                    )
-                    val toDetail = NewsFragmentDirections.actionNavigationNewsToDetailFragment(data)
-                    findNavController().navigate(toDetail,extras)
+                        with(data.news){
+                            val extras = FragmentNavigatorExtras(
+                                tvItemAuthor to "author_${this.publishedAt}",
+                                tvItemTitle to "title_${this.publishedAt}",
+                                imgItemPoster to "image_${this.publishedAt}",
+                                tvItemDescription to "desc_${this.publishedAt}"
+                            )
+                            val toDetail = NewsFragmentDirections.actionNavigationNewsToDetailFragment(data)
+                            findNavController().navigate(toDetail,extras)
+                        }
+
                 }
             }
         })
@@ -72,7 +79,7 @@ class NewsFragment : Fragment() {
                 Status.SUCCESS -> {
                     loader(false)
                     if(result.data != null){
-                        newsAdapter.updateNewsListItem(result.data)
+                        newsAdapter.updateNewsListItem(convertToNewsWithSourceEntities(result.data))
                     }else{
                         //TODO: show empty layout
                     }

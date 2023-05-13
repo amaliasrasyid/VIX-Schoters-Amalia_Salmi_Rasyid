@@ -1,4 +1,4 @@
-package com.amaliarasyid.simplenewsapp.ui.news
+package com.amaliarasyid.simplenewsapp.ui.NewsWithSource
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.amaliarasyid.simplenewsapp.data.remote.response.ArticlesItem
+import com.amaliarasyid.simplenewsapp.data.entities.NewsWithSource
 import com.amaliarasyid.simplenewsapp.databinding.ItemNewsBinding
 import com.amaliarasyid.simplenewsapp.utils.convertDate
 import com.amaliarasyid.simplenewsapp.utils.setImage
@@ -17,9 +17,9 @@ class NewsAdapter(private val context: Context):
 {
 
     private var onItemCallback: OnItemCallback? = null
-    private val data: ArrayList<ArticlesItem> = ArrayList()
+    private val data: ArrayList<NewsWithSource> = ArrayList()
 
-    fun updateNewsListItem(newData: List<ArticlesItem>) {
+    fun updateNewsListItem(newData: List<NewsWithSource>) {
         val diffCallback = NewsDiffCallback(this.data,newData)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
 
@@ -42,27 +42,27 @@ class NewsAdapter(private val context: Context):
     fun setOnItemCallback(onItemCallback: OnItemCallback){  this.onItemCallback = onItemCallback }
 
     interface OnItemCallback{
-        fun onItemClicked(binding:ItemNewsBinding,data: ArticlesItem)
+        fun onItemClicked(binding:ItemNewsBinding,data: NewsWithSource)
     }
 
     inner class NewsViewHolder(private val binding: ItemNewsBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: ArticlesItem) {
+        fun bind(data: NewsWithSource) {
             with(binding){
-                tvItemAuthor.text = data.author
-                tvItemTitle.text = data.title
-                tvItemDescription.text = data.description
-                itemView.setOnClickListener{ onItemCallback?.onItemClicked(binding,data) }
+                with(data.news){
+                    tvItemAuthor.text = this.author
+                    tvItemTitle.text = this.title
+                    tvItemDescription.text = this.description
+                    itemView.setOnClickListener{ onItemCallback?.onItemClicked(binding,data) }
 
-                if(data.urlToImage != null){
-                    imgItemPoster.setImage(data.urlToImage)
+                    if(this.urlToImage != null){
+                        imgItemPoster.setImage(this.urlToImage)
+                    }
+                    //set transition name
+                    ViewCompat.setTransitionName(tvItemAuthor,"author_${this.publishedAt}")
+                    ViewCompat.setTransitionName(tvItemTitle,"title_${this.publishedAt}")
+                    ViewCompat.setTransitionName(imgItemPoster,"image_${this.publishedAt}")
+                    ViewCompat.setTransitionName(tvItemDescription,"desc_${this.publishedAt}")
                 }
-                //set transition name
-                ViewCompat.setTransitionName(tvItemAuthor,"author_${data.publishedAt}")
-                ViewCompat.setTransitionName(tvItemTitle,"title_${data.publishedAt}")
-                ViewCompat.setTransitionName(imgItemPoster,"image_${data.publishedAt}")
-                ViewCompat.setTransitionName(tvItemDescription,"desc_${data.publishedAt}")
-
-
             }
         }
     }

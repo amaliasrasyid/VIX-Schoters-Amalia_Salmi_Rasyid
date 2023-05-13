@@ -17,9 +17,13 @@
 
     <fragment
         android:id="@+id/navigation_bookmark"
-        android:name="com.amaliarasyid.simplenewsapp.ui.bookmark.BookmarkFragment"
+        android:name="com.amaliarasyid.simplenewsapp.ui.news.bookmark.BookmarkFragment"
         android:label="@string/title_bookmark"
-        tools:layout="@layout/fragment_bookmark" />
+        tools:layout="@layout/fragment_bookmark" >
+        <action
+            android:id="@+id/action_navigation_bookmark_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_profile"
@@ -29,10 +33,18 @@
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.amaliarasyid.simplenewsapp.ui.news.detail.DetailFragment"
-        android:label="fragment_detail"
+        android:label="fragment_de tail"
         tools:layout="@layout/fragment_detail" >
         <argument
-            android:name="extra_article_item"
-            app:argType="com.amaliarasyid.simplenewsapp.data.remote.response.ArticlesItem" />
+            android:name="extra_news_source"
+            app:argType="com.amaliarasyid.simplenewsapp.data.entities.NewsWithSource" />
+        <argument
+            android:name="source_id"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="news_id"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
 </navigation>

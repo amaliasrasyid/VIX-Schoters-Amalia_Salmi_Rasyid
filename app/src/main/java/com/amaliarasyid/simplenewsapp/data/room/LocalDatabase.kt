@@ -4,10 +4,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.amaliarasyid.simplenewsapp.data.model.NewsModel
+import com.amaliarasyid.simplenewsapp.data.entities.News
+import com.amaliarasyid.simplenewsapp.data.entities.Source
 import com.amaliarasyid.simplenewsapp.data.room.dao.NewsDao
 
-@Database(entities = [NewsModel::class], version = 1, exportSchema = false)
+@Database(entities = [News::class, Source::class], version = 3, exportSchema = false)
 abstract class LocalDatabase : RoomDatabase() {
 
     abstract fun newsDao(): NewsDao

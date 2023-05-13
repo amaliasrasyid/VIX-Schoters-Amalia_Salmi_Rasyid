@@ -32,7 +32,7 @@ data class ArticlesItem(
 	val description: String? = null,
 
 	@field:SerializedName("source")
-	val source: Source? = null,
+	val sourceResponse: SourceResponse? = null,
 
 	@field:SerializedName("title")
 	val title: String? = null,
@@ -45,7 +45,7 @@ data class ArticlesItem(
 ): Parcelable
 
 @Parcelize
-data class Source(
+data class SourceResponse(
 
 	@field:SerializedName("name")
 	val name: String? = null,
