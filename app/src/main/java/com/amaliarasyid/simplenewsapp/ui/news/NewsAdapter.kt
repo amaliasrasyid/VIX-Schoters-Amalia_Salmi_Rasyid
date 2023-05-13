@@ -3,10 +3,14 @@ package com.amaliarasyid.simplenewsapp.ui.news
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.amaliarasyid.simplenewsapp.data.remote.response.ArticlesItem
 import com.amaliarasyid.simplenewsapp.databinding.ItemNewsBinding
+import com.amaliarasyid.simplenewsapp.utils.convertDate
+import com.amaliarasyid.simplenewsapp.utils.setImage
+import com.bumptech.glide.Glide
 
 class NewsAdapter(private val context: Context):
     RecyclerView.Adapter<NewsAdapter.NewsViewHolder>()
@@ -44,19 +48,22 @@ class NewsAdapter(private val context: Context):
     inner class NewsViewHolder(private val binding: ItemNewsBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(data: ArticlesItem) {
             with(binding){
-//                tvName.text = data.name
-//                tvTimeCreated.convertDate(data.createdAt, context)
-//                tvDescription.text = data.description
-//                itemView.setOnClickListener{onItemCallback?.onItemClicked(binding,data)
-//            }
-//
-//                //set transition name
-//                ViewCompat.setTransitionName(tvName,"author_${data.id}")
-//                ViewCompat.setTransitionName(tvTimeCreated,"time_created_${data.id}")
-//                ViewCompat.setTransitionName(imgPicture,"image_story_${data.id}")
-//                ViewCompat.setTransitionName(tvDescription,"desc_story_${data.id}")
+                tvItemAuthor.text = data.author
+                tvItemTitle.text = data.title
+                tvItemDescription.text = data.description
+                itemView.setOnClickListener{ onItemCallback?.onItemClicked(binding,data) }
+
+                if(data.urlToImage != null){
+                    imgItemPoster.setImage(data.urlToImage)
+                }
+                //set transition name
+                ViewCompat.setTransitionName(tvItemAuthor,"author_${data.publishedAt}")
+                ViewCompat.setTransitionName(tvItemTitle,"title_${data.publishedAt}")
+                ViewCompat.setTransitionName(imgItemPoster,"image_${data.publishedAt}")
+                ViewCompat.setTransitionName(tvItemDescription,"desc_${data.publishedAt}")
+
+
             }
         }
-
     }
 }

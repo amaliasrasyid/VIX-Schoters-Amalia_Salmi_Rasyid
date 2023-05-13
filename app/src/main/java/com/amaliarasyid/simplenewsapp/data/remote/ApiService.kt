@@ -6,7 +6,7 @@ import retrofit2.http.*
 
 interface ApiService {
 
-    @POST("top-headlines?country=id")
+    @GET("top-headlines?country=us")
     suspend fun topHeadlines(
         @Query("apikey") apikey: String
     ) : Response<NewsResponse>
