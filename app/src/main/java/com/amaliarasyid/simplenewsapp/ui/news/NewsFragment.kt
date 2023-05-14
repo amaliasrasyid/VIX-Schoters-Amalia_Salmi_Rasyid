@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.amaliarasyid.simplenewsapp.R
 import com.amaliarasyid.simplenewsapp.data.entities.News
 import com.amaliarasyid.simplenewsapp.data.entities.NewsWithSource
 import com.amaliarasyid.simplenewsapp.data.remote.response.ArticlesItem
@@ -81,13 +82,21 @@ class NewsFragment : Fragment() {
                     if(result.data != null){
                         newsAdapter.updateNewsListItem(convertToNewsWithSourceEntities(result.data))
                     }else{
-                        //TODO: show empty layout
+                        with(binding.itemMessage){
+                            this.root.visibility = View.VISIBLE
+                            this.imgMessage.setImageResource(R.drawable.ic_empty_box)
+                            this.tvMessage.text = result.message
+                        }
                     }
                     Timber.d("success response")
                 }
                 Status.ERROR -> {
                     loader(false)
-                    view?.mySnackBar(result.message.toString())
+                    with(binding.itemMessage){
+                        this.root.visibility = View.VISIBLE
+                        this.imgMessage.setImageResource(R.drawable.ic_error)
+                        this.tvMessage.text = result.message
+                    }
                 }
             }
         }

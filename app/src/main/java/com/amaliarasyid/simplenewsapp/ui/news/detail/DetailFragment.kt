@@ -5,13 +5,20 @@ import android.net.Uri
 import android.os.Bundle
 import android.transition.TransitionInflater
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.View.OnClickListener
 import android.view.ViewGroup
+import androidx.core.view.MenuProvider
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.navArgs
+import com.amaliarasyid.simplenewsapp.R
+import com.amaliarasyid.simplenewsapp.data.entities.NewsWithSource
 import com.amaliarasyid.simplenewsapp.databinding.FragmentDetailBinding
 import com.amaliarasyid.simplenewsapp.ui.news.NewsViewModel
 import com.amaliarasyid.simplenewsapp.utils.convertDate
@@ -30,6 +37,8 @@ class DetailFragment : Fragment(),OnClickListener {
     private var sourceUrl: String = ""
     private var sourceId = 0
     private var newsId = 0
+    private var isBookmarked =false
+    private var dMenu: Menu? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,9 +76,50 @@ class DetailFragment : Fragment(),OnClickListener {
                 tvSource.text = this.source.name
 
                 tvSource.setOnClickListener(this@DetailFragment)
-                btnBookmark.setOnClickListener(this@DetailFragment)
             }
         }
+
+        val menuHost = requireActivity()
+        menuHost.addMenuProvider(object :MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                dMenu = menu
+                menuInflater.inflate(R.menu.bookmark_menu,menu)
+
+                val extra = args.extraNewsSource
+                val returnedNews = findNews(extra.news.publishedAt)
+                if(isBookmarked){
+                    dMenu?.getItem(1)?.setVisible(true)
+                    dMenu?.getItem(0)?.setVisible(false)
+
+                    returnedNews?.let{
+                        newsId = it.news.id
+                        sourceId = it.source.id
+                    }
+                }
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                var state = false
+                when(menuItem.itemId){
+                    R.id.checked_bookmark -> {
+                        menuItem.setVisible(false)
+                        dMenu?.getItem(0)?.setVisible(true)
+                        delete()
+                        Timber.d("unChecked Bookmark")
+                        state = true
+                    }
+                    R.id.unchecked_bookmark -> {
+                        menuItem.setVisible(false)
+                        dMenu?.getItem(1)?.setVisible(true)
+                        insert()
+                        Timber.d("checked Bookmark")
+                        state = true
+                    }
+                }
+                return state
+            }
+
+        },viewLifecycleOwner,Lifecycle.State.RESUMED)
     }
 
     override fun onClick(v: View?) {
@@ -81,16 +131,17 @@ class DetailFragment : Fragment(),OnClickListener {
                     i.data = Uri.parse(url)
                     startActivity(i)
                 }
-                btnBookmark -> {
-//                    insert()
-//                    v.mySnackBar("Insert Data Bookmark")
-                    delete()
-                    v.mySnackBar("Delete Data Bookmark")
-                }
                 else -> Timber.d("Unknown View Clicked")
             }
         }
     }
+
+    fun findNews(publishedAt: String): NewsWithSource?{
+        var result = viewModel.findNews(publishedAt)
+        isBookmarked = result != null
+        return result
+    }
+
     fun insert(){
         with(args.extraNewsSource){
             val source = this.source
@@ -99,20 +150,11 @@ class DetailFragment : Fragment(),OnClickListener {
                 news.sourceId = id.toInt()
                 viewModel.addNews(news)
             }
-
             Timber.d("button bookmark clicked")
         }
     }
     fun delete(){
         viewModel.deleteNewsWithSource(newsId, sourceId)
-        Timber.d("News Id: ${newsId}, Source Id: ${sourceId}")
-//        viewModel.deleteSource(sourceId)
-//        viewModel.deleteNews(newsId)
+        Timber.d("delete; News Id: ${newsId}, Source Id: ${sourceId}")
     }
-
-    fun isExist(){
-
-    }
-
-
 }

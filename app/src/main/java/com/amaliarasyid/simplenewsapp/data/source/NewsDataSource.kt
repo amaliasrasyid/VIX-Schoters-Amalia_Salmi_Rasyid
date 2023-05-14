@@ -10,12 +10,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface NewsDataSource {
     fun getListTopHeadlines(apikey: String): Flow<Resource<List<ArticlesItem>>>
-    fun getListBookmarkedNews(): LiveData<List<NewsWithSource>>
-    fun insertNews(data: News)
-    fun insertSource(data: Source): Long
-
-    fun deleteNews(newsId: Int)
-    fun deleteSource(sourceId: Int)
-
-    fun deleteNewsWithSource(newsId: Int,sourceId: Int)
+    fun getListBookmarkedNews(): Flow<List<NewsWithSource>>
+    suspend fun insertNews(data: News)
+    suspend fun insertSource(data: Source): Long
+    suspend fun deleteNewsWithSource(newsId: Int,sourceId: Int)
+    fun findNews(publishedAt: String): NewsWithSource?
 }

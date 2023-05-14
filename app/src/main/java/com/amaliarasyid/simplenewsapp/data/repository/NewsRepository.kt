@@ -1,6 +1,7 @@
 package com.amaliarasyid.simplenewsapp.data.repository
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.asLiveData
 import com.amaliarasyid.simplenewsapp.data.entities.News
 import com.amaliarasyid.simplenewsapp.data.entities.NewsWithSource
 import com.amaliarasyid.simplenewsapp.data.entities.Source
@@ -18,12 +19,13 @@ class NewsRepository @Inject constructor(
     ): NewsDataSource {
 
     override fun getListTopHeadlines(apikey: String): Flow<Resource<List<ArticlesItem>>> = dataSource.getTopHeadlines(apikey)
-    override fun getListBookmarkedNews(): LiveData<List<NewsWithSource>> = newsDao.getNewsWithSource()
+    override fun getListBookmarkedNews(): Flow<List<NewsWithSource>> = newsDao.getNewsWithSource()
 
-    override fun insertNews(data: News) = newsDao.insertNews(data)
-    override fun insertSource(data: Source): Long = newsDao.insertSource(data)
-    override fun deleteNews(newsId: Int) = newsDao.deleteNews(newsId)
-    override fun deleteSource(sourceId: Int) = newsDao.deleteSource(sourceId)
-    override fun deleteNewsWithSource(newsId: Int, sourceId: Int) = newsDao.deleteNewsWithSource(newsId, sourceId)
+    override suspend fun insertNews(data: News) = newsDao.insertNews(data)
+
+    override suspend fun insertSource(data: Source): Long = newsDao.insertSource(data)
+
+    override suspend fun deleteNewsWithSource(newsId: Int, sourceId: Int) = newsDao.deleteNewsWithSource(newsId, sourceId)
+    override fun findNews(publishedAt: String): NewsWithSource?= newsDao.findNews(publishedAt)
 
 }

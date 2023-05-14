@@ -3,6 +3,8 @@ package com.amaliarasyid.simplenewsapp.utils
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.amaliarasyid.simplenewsapp.data.entities.News
 import com.amaliarasyid.simplenewsapp.data.entities.NewsWithSource
 import com.amaliarasyid.simplenewsapp.data.entities.Source
@@ -40,6 +42,10 @@ fun convertToNewsEntities(arg: ArticlesItem,sourceId: Int): News{
     with(arg){
         return News(0,this.author!!,this.title!!,this.description,this.publishedAt!!,this.urlToImage,this.url!!,sourceId )
     }
+}
+
+fun Fragment.back(){
+    findNavController().navigateUp()
 }
 
 fun convertToNewsWithSourceEntities(list: List<ArticlesItem>): List<NewsWithSource>{

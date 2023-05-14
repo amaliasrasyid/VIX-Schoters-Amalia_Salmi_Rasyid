@@ -32,4 +32,9 @@ private lateinit var binding: ActivityHomeBinding
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
+
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.nav_host_fragment_activity_home)
+        return navController.navigateUp() || super.onSupportNavigateUp()
+    }
 }

@@ -12,7 +12,8 @@
         tools:layout="@layout/fragment_news" >
         <action
             android:id="@+id/action_navigation_news_to_detailFragment"
-            app:destination="@id/detailFragment" />
+            app:destination="@id/detailFragment"
+            app:popUpTo="@id/navigation_news" />
     </fragment>
 
     <fragment
@@ -33,7 +34,7 @@
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.amaliarasyid.simplenewsapp.ui.news.detail.DetailFragment"
-        android:label="fragment_de tail"
+        android:label="@string/title_news_detail"
         tools:layout="@layout/fragment_detail" >
         <argument
             android:name="extra_news_source"

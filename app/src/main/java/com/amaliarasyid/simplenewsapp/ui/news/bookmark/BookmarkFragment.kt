@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.amaliarasyid.simplenewsapp.R
 import com.amaliarasyid.simplenewsapp.data.entities.News
 import com.amaliarasyid.simplenewsapp.data.entities.NewsWithSource
 import com.amaliarasyid.simplenewsapp.data.remote.response.ArticlesItem
@@ -63,7 +64,7 @@ class BookmarkFragment : Fragment() {
                             imgItemPoster to "image_${this.publishedAt}",
                             tvItemDescription to "desc_${this.publishedAt}"
                         )
-                        val toDetail =BookmarkFragmentDirections.actionNavigationBookmarkToDetailFragment(data)
+                        val toDetail = BookmarkFragmentDirections.actionNavigationBookmarkToDetailFragment(data)
                         findNavController().navigate(toDetail,extras)
                     }
                 }
@@ -73,10 +74,35 @@ class BookmarkFragment : Fragment() {
     }
 
     private fun loadData() {
-        viewModel.loadBookmarkedNews().observe(viewLifecycleOwner){result ->
+        viewModel.loadBookmarkedNews().observe(viewLifecycleOwner){ result ->
             if(result != null ){
-                newsAdapter.updateNewsListItem(result)
-                Timber.d("data bookmark:${result.toString()}")
+                loader(false)
+                if(result.size != 0){
+                    newsAdapter.updateNewsListItem(result)
+                }else{
+                    with(binding.itemMessage){
+                        this.root.visibility = View.VISIBLE
+                        this.imgMessage.setImageResource(R.drawable.ic_empty_box)
+                        this.tvMessage.text = getString(R.string.empty_text)
+                    }
+                }
+            }else{
+                loader(false)
+                with(binding.itemMessage){
+                    this.root.visibility = View.VISIBLE
+                    this.imgMessage.setImageResource(R.drawable.ic_error)
+                    this.tvMessage.text = "Unknown Error"
+                }
+            }
+        }
+    }
+
+    private fun loader(state: Boolean) {
+        with(binding) {
+            if (state) {
+                progressBar.visibility = View.VISIBLE
+            } else {
+                progressBar.visibility = View.GONE
             }
         }
     }

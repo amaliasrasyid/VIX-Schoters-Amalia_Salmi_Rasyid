@@ -19,7 +19,17 @@ class NewsViewModel @Inject constructor(
 
     fun getTopHeadlines(token: String): LiveData<Resource<List<ArticlesItem>>> = repository.getListTopHeadlines(token).asLiveData()
 
-    fun loadBookmarkedNews(): LiveData<List<NewsWithSource>> = repository.getListBookmarkedNews()
+    fun loadBookmarkedNews(): LiveData<List<NewsWithSource>> = repository.getListBookmarkedNews().asLiveData()
+
+    fun findNews(publishedAt: String): NewsWithSource? = repository.findNews(publishedAt)
+
+    fun addSource(source: Source): LiveData<Long> {
+        var returnedId = MutableLiveData<Long>()
+        viewModelScope.launch {
+            returnedId.value = repository.insertSource(source)
+        }
+        return returnedId
+    }
 
     fun addNews(news: News){
         viewModelScope.launch(Dispatchers.IO) {
@@ -27,17 +37,12 @@ class NewsViewModel @Inject constructor(
         }
     }
 
-    fun addSource(source: Source):LiveData<Long>  {
-        val result = MutableLiveData<Long>()
+    fun deleteNewsWithSource(newsId: Int,sourceId: Int) {
         viewModelScope.launch {
-            result.value = repository.insertSource(source)
+            repository.deleteNewsWithSource(newsId, sourceId)
         }
-        return result
     }
 
-    fun deleteNews(newsId: Int) =  repository.deleteNews(newsId)
-    fun deleteSource(sourceId: Int) =  repository.deleteSource(sourceId)
 
-    fun deleteNewsWithSource(newsId: Int,sourceId: Int) = repository.deleteNewsWithSource(newsId, sourceId)
 
 }

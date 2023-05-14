@@ -17,4 +17,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"/>
+
+    <include
+        android:id="@+id/item_message"
+        android:visibility="gone"
+        layout="@layout/item_message"/>
 </FrameLayout>
