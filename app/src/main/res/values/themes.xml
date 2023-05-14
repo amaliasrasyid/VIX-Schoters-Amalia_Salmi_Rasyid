@@ -4,30 +4,28 @@
     <style name="Theme.SimpleNewsApp" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorSecondary">@color/colorWarning</item>
-        <item name="colorAccent">@color/colorSecondary</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
     <style name="LayoutBackground">
-        <item name="android:background">@color/colorPrimary</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
     </style>
     
     <style name="TextContent" parent="Widget.AppCompat.TextView">
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/colorPrimary</item>
         <item name="fontFamily">@font/brandon_reg</item>
     </style>
     
     <style name="TextTitle" parent="Widget.AppCompat.TextView">
-        <item name="fontFamily">@font/brandon_bld</item>
+        <item name="fontFamily">@font/brandon_med</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/colorSecondary</item>
+        <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
     <style name="CustomText" parent="Widget.AppCompat.TextView">
-        <item name="color">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorPrimary</item>
         <item name="fontFamily">@font/brandon_reg</item>
         <item name="android:textSize">14sp</item>
     </style>

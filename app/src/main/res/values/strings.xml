@@ -6,23 +6,15 @@
 
     <string name="empty_text">No Data</string>
 
-    <string name="key_noification_release_today" translatable="false">noification_release_today</string>
-    <string name="key_notification_daily_reminder" translatable="false">notification_daily_reminder</string>
-    <string name="key_languange_change" translatable="false">languange_change</string>
-    <string name="text_search">Search</string>
-    <string name="msg_not_found">Not Found</string>
-    <string name="msg_poster_favorite">Poster Favorite</string>
     <string name="text_sample_title">Google\'s Bard AI chatbot launches in Australia with vow to develop it ethically - The Guardian</string>
     <string name="text_sample_description">Company says its AI programs will include watermarks and metadata identifying AI-generated content as ChatGPT rival rolls out in more than 180 countries</string>
     <string name="text_sample_author">Josh Taylor</string>
-    <string name="text_sample_published_date"> | 22 October 2022</string>
-    <string name="github_username">amaliasrasyid</string>
+    <string name="text_sample_published_date">| 22 October 2022</string>
+    <string name="github_username">amaliasrasyid (github)</string>
     <string name="user_name">Amalia Salmi Rasyid</string>
-    <string name="sample_source">BaltimoreRavens.com</string>
     <string name="text_source">Source : </string>
     <string name="text_unchecked_bookmark">Unchecked Bookmark</string>
     <string name="text_checked_bookmark">Checked Bookmark</string>
     <string name="title_news_detail">Detail Berita</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="sample_source">cnn.usa.com</string>
 </resources>
