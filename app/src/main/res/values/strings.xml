@@ -4,7 +4,7 @@
     <string name="title_bookmark">Bookmark</string>
     <string name="title_profile">Profil</string>
 
-    <string name="empty_text">No Data</string>
+    <string name="empty_text">Data Kosong</string>
 
     <string name="text_sample_title">Google\'s Bard AI chatbot launches in Australia with vow to develop it ethically - The Guardian</string>
     <string name="text_sample_description">Company says its AI programs will include watermarks and metadata identifying AI-generated content as ChatGPT rival rolls out in more than 180 countries</string>

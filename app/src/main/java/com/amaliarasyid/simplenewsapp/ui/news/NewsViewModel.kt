@@ -42,7 +42,4 @@ class NewsViewModel @Inject constructor(
             repository.deleteNewsWithSource(newsId, sourceId)
         }
     }
-
-
-
 }

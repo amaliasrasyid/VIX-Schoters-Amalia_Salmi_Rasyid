@@ -105,14 +105,12 @@ class DetailFragment : Fragment(),OnClickListener {
                         menuItem.setVisible(false)
                         dMenu?.getItem(0)?.setVisible(true)
                         delete()
-                        Timber.d("unChecked Bookmark")
                         state = true
                     }
                     R.id.unchecked_bookmark -> {
                         menuItem.setVisible(false)
                         dMenu?.getItem(1)?.setVisible(true)
                         insert()
-                        Timber.d("checked Bookmark")
                         state = true
                     }
                 }
@@ -150,11 +148,9 @@ class DetailFragment : Fragment(),OnClickListener {
                 news.sourceId = id.toInt()
                 viewModel.addNews(news)
             }
-            Timber.d("button bookmark clicked")
         }
     }
     fun delete(){
         viewModel.deleteNewsWithSource(newsId, sourceId)
-        Timber.d("delete; News Id: ${newsId}, Source Id: ${sourceId}")
     }
 }

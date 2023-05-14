@@ -64,7 +64,6 @@ class NewsFragment : Fragment() {
                             val toDetail = NewsFragmentDirections.actionNavigationNewsToDetailFragment(data)
                             findNavController().navigate(toDetail,extras)
                         }
-
                 }
             }
         })
@@ -88,7 +87,6 @@ class NewsFragment : Fragment() {
                             this.tvMessage.text = result.message
                         }
                     }
-                    Timber.d("success response")
                 }
                 Status.ERROR -> {
                     loader(false)
